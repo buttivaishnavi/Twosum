@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'JDK21'     
-        maven 'Maven3' 
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -13,22 +8,12 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                dir('Twosum2') {   
-                    script {
-                        bat 'mvn clean install'
-                    }
-                }
-            }
-        }
-
         stage('Build & Test') {
             steps {
                 dir('Twosum2') {   
                     script {
-                        bat 'mvn package'
-                        bat 'mvn test'
+                        sh 'javac Twosum.java'
+                        sh 'java Twosum.java'
                     }
                 }
             }
