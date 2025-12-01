@@ -19,15 +19,6 @@ pipeline {
             }
         }
 
-        stage('Archive Artifact') {
-            steps {
-                dir('Twosum2') {   
-                    junit 'target/surefire-reports/*.xml'
-                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
-                }
-            }
-        }
-    }
 
     post {
         success {
