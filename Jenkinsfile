@@ -13,7 +13,7 @@ pipeline {
                 dir('Twosum2') {   
                     script {
                         sh 'javac Twosum.java'
-                        sh 'java Twosum.java'
+                        sh 'java Twosum'
                     }
                 }
             }
