@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    triggers {
+        // Option 1: Poll SCM every minute for new commits
+        pollSCM('* * * * *')
+        // If you configure a GitHub/GitLab webhook instead, you can remove pollSCM.
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,24 +14,18 @@ pipeline {
             }
         }
 
-        stage('Build & Test') {
+        stage('Build') {
             steps {
-                dir('Twosum2') {   
-                    script {
-                        sh 'javac Twosum.java'
-                        sh 'java Twosum'
-                    }
-                }
+                sh 'echo "Building Twosum app..."'
+                sh 'javac Twosum.java'
             }
         }
 
-
-    post {
-        success {
-            echo '✅ Build and archive completed successfully!'
-        }
-        failure {
-            echo '❌ Build failed. Please check logs.'
+        stage('Test / Run') {
+            steps {
+                sh 'echo "Running Twosum..."'
+                sh 'java Twosum'
+            }
         }
     }
 }
